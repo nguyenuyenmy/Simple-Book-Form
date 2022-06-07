@@ -1,0 +1,23 @@
+{% extends 'form_app/base.html' %}
+
+{% block body_block %}
+<div class = "container">
+    <h1>Author Form</h1>
+    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "author-form">
+        {% csrf_token %}
+        {{form_author.as_p}}
+        <input type="submit" value = "Edit"/>
+    </form>
+</div>
+{% endblock %}
+
+<!--
+{% block script %}
+<script type='text/javascript'>
+    function submitform() {
+        window.opener.location = self.opener.location;
+        opener.location.reload(true);
+        self.close();
+    }
+</script>
+{% endblock %}-->

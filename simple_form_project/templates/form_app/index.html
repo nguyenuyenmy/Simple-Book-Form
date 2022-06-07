@@ -1,0 +1,79 @@
+{% extends 'form_app/base.html' %}
+{% load static %}
+
+{% block body_block %}
+
+<div class = "container">
+    <h1>Add a Book</h1>
+    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "book-form">
+        {% csrf_token %}
+
+        <label for="book-author" class="control-label">Book Author</label>
+        {{form_book.author}}
+        <a href="/author" id="add_author" onclick="return showAddPopup(this);"><img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1024px-OOjs_UI_icon_add.svg.png'
+                                                                                    width='20' height='20'></a>
+        <a id="edit_author" style="cursor: pointer; cursor: hand;"><img src = 'https://cdn-icons-png.flaticon.com/512/1250/1250615.png?w=360'
+                                                                        width='16' height='16'></a>
+        <a id="delete_author" style="cursor: pointer; cursor: hand;"><img src = 'https://images.all-free-download.com/images/graphiclarge/trash_alt_sign_icon_flat_contrast_black_white_sketch_6921872.jpg'
+                                                                        width='16' height='16'></a>
+
+        <br><br>
+
+        <label for="book-title" class="control-label">Book Title</label>
+        {{form_book.book_name}}
+        <br><br>
+
+        <label for="book-price" class="control-label">Book ID</label>
+        {{form_book.book_id}}
+        <br><br>
+
+        <label for="book-publish" class="control-label">Published Date</label>
+        {{form_book.published_date}}
+
+        <br><br>
+        <input type="submit" value = "Submit" />
+    </form>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+$("#edit_author").click(function(){
+	author_name = $("#id_author option:selected").text();
+	var data = {"author_name":author_name};
+    $.ajax({
+        type : 'GET',
+        url :  '/author/ajax/get_author_id',
+        data : data,
+        success : function(data){
+        	var url = "/author/" + data['author_id'] + "/edit/";
+        	showEditPopup(url);
+        },
+        error: function(data) {
+          alert("Select a book author");
+        }
+  	});
+})
+
+$("#delete_author").click(function(){
+	author_name = $("#id_author option:selected").text();
+	var data = {"author_name":author_name};
+    $.ajax({
+        type : 'GET',
+        url :  '/author/ajax/get_author_id',
+        data : data,
+        success : function(data){
+        	var url = "/author/" + data['author_id'] + "/delete/";
+        	showEditPopup(url);
+        },
+        error: function(data) {
+          alert("Select a book author");
+        }
+  	});
+})
+
+</script>
+{% endblock %}
+
